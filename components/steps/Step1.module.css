@@ -1,0 +1,100 @@
+.content {
+  display: flex;
+  height: 12.5rem;
+  padding: 1.5rem 1.5rem 2rem 1.5rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  align-self: stretch;
+}
+
+.permissionStep {
+  display: flex;
+  width: 25rem;
+  min-width: 21.4375rem;
+  max-width: 30rem;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  align-self: stretch;
+  color: #101828;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.5rem;
+}
+
+.inputFields {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  align-self: stretch;
+}
+
+.inputFields label {
+  color: var(--Gray-700, #344054);
+
+  /* Text s/Medium */
+  font-family: Poppins;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.25rem;
+}
+
+.inputFields label sup {
+  color: var(--Error-500, #f04438);
+
+  /* Text s/Medium */
+  font-family: Poppins;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.25rem;
+}
+
+.inputFields input {
+  display: flex;
+  padding: 0.625rem 0.875rem;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: stretch;
+  border-radius: 0.5rem;
+  border: 1px solid var(--Gray-300, #d0d5dd);
+  background: var(--Base-White, #fff);
+
+  /* Shadow/xs */
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+}
+
+.inputFields input::placeholder {
+  flex: 1 0 0;
+  color: var(--Gray-500, #667085);
+
+  /* Text m/Regular */
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5rem;
+  color: #667085;
+}
+
+.hintText {
+  color: var(--Gray-600, #475467);
+
+  /* Text s/Regular */
+  font-family: Poppins;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.25rem;
+  color: #475467;
+}
