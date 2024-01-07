@@ -7,12 +7,16 @@ export const selectedStructuresSlice = createSlice({
   initialState,
   reducers: {
     addStructure(state, action) {
-      console.log("adding");
       const newStructure = {
         name: action.payload.structureName,
         role: action.payload.selectedRole,
       };
-      state.structures.push(newStructure);
+      const structureExists = state.structures.some(
+        (structure) => structure.name === newStructure.name
+      );
+      if (!structureExists) {
+        state.structures.push(newStructure);
+      }
     },
     editStructureRole(state, action) {
       console.log("editing");
