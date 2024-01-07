@@ -1,18 +1,16 @@
 import Image from "next/image";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import classes from "./Step1.module.css";
 import permissionsGroupsStep1 from "../../public/images/permissionsGroupsStep1.svg";
 import { groupNameSliceActions } from "@/store/groupNameSlice";
 
 const Step1 = () => {
-  const [groupName, setGroupName] = useState("");
-
   const dispatch = useDispatch();
+  const groupName = useSelector((state) => state.groupName.groupName);
 
   const groupNameChangeHandler = (event) => {
-    setGroupName(event.target.value);
     dispatch(
       groupNameSliceActions.setGroupName({ groupName: event.target.value })
     );
