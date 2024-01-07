@@ -2,7 +2,7 @@ import Image from "next/image";
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import classes from "./Step2.module.css";
 import permissionsGroupsStep2 from "../../../public/images/permissionsGroupsStep2.svg";
@@ -16,6 +16,10 @@ const Step2 = () => {
   const [searchInput, setSearchInput] = useState("");
 
   const dispatch = useDispatch();
+
+  const selectedStructures = useSelector(
+    (state) => state.selectedStructures.structures
+  );
 
   const checkAllStructuresHandler = () => {
     //dispatch action to add all the structures with the role being the default role (No access)
@@ -107,7 +111,13 @@ const Step2 = () => {
                   key={index}
                   structureName={structure}
                   structureRoles={roles}
-                  checkAll={allStructuresCheck}
+                  isChecked={selectedStructures.some(
+                    (struc) => struc.name === structure
+                  )}
+                  role={
+                    selectedStructures.find((struc) => struc.name === structure)
+                      ?.role ?? "No access"
+                  }
                 />
               ))}
             </div>

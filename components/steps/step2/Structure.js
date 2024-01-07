@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import classes from "./Structure.module.css";
 import { selectedStructuresSliceActions } from "@/store/selectedStructuresSlice";
 
-const Structure = ({ structureName, structureRoles, checkAll }) => {
-  const [selectedRole, setSelectedRole] = useState("No access");
-  const [isChecked, setIsChecked] = useState(checkAll);
+const Structure = ({ structureName, structureRoles, isChecked, role }) => {
+  const [selectedRole, setSelectedRole] = useState(role);
 
   const dispatch = useDispatch();
 
@@ -26,23 +25,20 @@ const Structure = ({ structureName, structureRoles, checkAll }) => {
         })
       );
     }
-    setIsChecked((checked) => !checked);
   };
 
   const selectRoleHandler = (event) => {
-    setSelectedRole(event.target.value);
+    const role = event.target.value;
+    setSelectedRole(role);
+
     //if it was already checked, the user wants to change the role of the added structure
     dispatch(
       selectedStructuresSliceActions.editStructureRole({
         structureName,
-        selectedRole,
+        selectedRole: role,
       })
     );
   };
-
-  useEffect(() => {
-    setIsChecked(checkAll);
-  }, [checkAll]);
 
   return (
     <div className={classes.structureDetails}>
