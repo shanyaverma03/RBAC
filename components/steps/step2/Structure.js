@@ -1,13 +1,43 @@
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 import classes from "./Structure.module.css";
+import { selectedStructuresSliceActions } from "@/store/selectedStructuresSlice";
 
 const Structure = ({ structureName, structureRoles, checkAll }) => {
   const [selectedRole, setSelectedRole] = useState("No access");
   const [isChecked, setIsChecked] = useState(checkAll);
 
-  const selectStructureHandler = () => {
+  const dispatch = useDispatch();
+
+  const structureChangeHandler = () => {
+    //if it was already checked, the user wants to remove the structure
+    if (isChecked) {
+      dispatch(
+        selectedStructuresSliceActions.removeStructure({ structureName })
+      );
+    }
+    //if not checked, user wants to add the structure
+    else {
+      dispatch(
+        selectedStructuresSliceActions.addStructure({
+          structureName,
+          selectedRole,
+        })
+      );
+    }
     setIsChecked((checked) => !checked);
+  };
+
+  const selectRoleHandler = (event) => {
+    setSelectedRole(event.target.value);
+    //if it was already checked, the user wants to change the role of the added structure
+    dispatch(
+      selectedStructuresSliceActions.editStructureRole({
+        structureName,
+        selectedRole,
+      })
+    );
   };
 
   useEffect(() => {
@@ -19,7 +49,7 @@ const Structure = ({ structureName, structureRoles, checkAll }) => {
       <div>
         <input
           type="checkbox"
-          onChange={selectStructureHandler}
+          onChange={structureChangeHandler}
           checked={isChecked}
         />
         <label>{structureName}</label>
@@ -27,7 +57,7 @@ const Structure = ({ structureName, structureRoles, checkAll }) => {
       <select
         value={selectedRole}
         className={classes.custom_dropdown}
-        onChange={(e) => setSelectedRole(e.target.value)}
+        onChange={selectRoleHandler}
       >
         {structureRoles &&
           structureRoles.map((role, index) => (
