@@ -22,15 +22,28 @@ const Step2 = () => {
   );
 
   const checkAllStructuresHandler = () => {
-    //dispatch action to add all the structures with the role being the default role (No access)
-    structures.map((structure) => {
-      dispatch(
-        selectedStructuresSliceActions.addStructure({
-          structureName: structure,
-          selectedRole: "No access",
-        })
-      );
-    });
+    //if it was already checked, the user wants to remove all structures
+    if (allStructuresCheck) {
+      structures.map((structure) => {
+        dispatch(
+          selectedStructuresSliceActions.removeStructure({
+            structureName: structure,
+          })
+        );
+      });
+    }
+    //if it was unchecked, dispatch action to add all the structures with the role being the default role (No access)
+    else {
+      structures.map((structure) => {
+        dispatch(
+          selectedStructuresSliceActions.addStructure({
+            structureName: structure,
+            selectedRole: "No access",
+          })
+        );
+      });
+    }
+
     setAllStructuresCheck((checkAll) => !checkAll);
   };
 
