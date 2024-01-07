@@ -9,15 +9,19 @@ import Step1 from "../steps/Step1";
 import Step2 from "../steps/step2/Step2";
 import Step4 from "../steps/step4/Step4";
 import Step3 from "../steps/Step3";
+import ErrorModal from "../Modal/ErrorModal";
 
 const CreateGroup = () => {
   const [activeStep, setActiveStep] = useState(1);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const groupName = useSelector((state) => state.groupName.groupName);
 
   const nextStepHandler = () => {
     if (groupName.trim().length === 0) {
-      console.log("error");
+      setError(true);
+      setErrorMessage("Please enter group name");
     } else {
       setActiveStep((prevStep) => prevStep + 1);
     }
@@ -66,6 +70,9 @@ const CreateGroup = () => {
           )}
         </div>
       </div>
+      {error && (
+        <ErrorModal onClose={() => setError(false)}>{errorMessage}</ErrorModal>
+      )}
     </div>
   );
 };
