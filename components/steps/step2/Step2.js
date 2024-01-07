@@ -2,10 +2,12 @@ import Image from "next/image";
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
 
 import classes from "./Step2.module.css";
 import permissionsGroupsStep2 from "../../../public/images/permissionsGroupsStep2.svg";
 import Structure from "./Structure";
+import { selectedStructuresSliceActions } from "@/store/selectedStructuresSlice";
 
 const Step2 = () => {
   const [structures, setStructures] = useState([]);
@@ -13,7 +15,18 @@ const Step2 = () => {
   const [allStructuresCheck, setAllStructuresCheck] = useState(false);
   const [searchInput, setSearchInput] = useState("");
 
+  const dispatch = useDispatch();
+
   const checkAllStructuresHandler = () => {
+    //dispatch action to add all the structures with the role being the default role (No access)
+    structures.map((structure) => {
+      dispatch(
+        selectedStructuresSliceActions.addStructure({
+          structureName: structure,
+          selectedRole: "No access",
+        })
+      );
+    });
     setAllStructuresCheck((checkAll) => !checkAll);
   };
 
