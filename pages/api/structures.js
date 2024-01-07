@@ -3,8 +3,17 @@ import axios from "axios";
 async function handler(req, res) {
   if (req.method === "GET") {
     try {
-      const response = await axios.get("http://localhost:8000/structures");
-      res.status(200).json({ structures: response.data });
+      res.status(200).json({
+        structures: [
+          "Phoenix",
+          "Jupiter",
+          "Saturn",
+          "Pyramid",
+          "Nile",
+          "Mercury",
+          "Ocean",
+        ],
+      });
     } catch (error) {
       res.status(500).json({ message: "Getting structures failed." });
     }
