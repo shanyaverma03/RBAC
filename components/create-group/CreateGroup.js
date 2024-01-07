@@ -17,11 +17,17 @@ const CreateGroup = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const groupName = useSelector((state) => state.groupName.groupName);
+  const selectedStructures = useSelector(
+    (state) => state.selectedStructures.structures
+  );
 
   const nextStepHandler = () => {
-    if (groupName.trim().length === 0) {
+    if (groupName.trim().length === 0 && activeStep === 1) {
       setError(true);
       setErrorMessage("Please enter group name");
+    } else if (selectedStructures.length === 0 && activeStep === 2) {
+      setError(true);
+      setErrorMessage("Please select at least one structure");
     } else {
       setActiveStep((prevStep) => prevStep + 1);
     }
