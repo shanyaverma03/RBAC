@@ -1,0 +1,37 @@
+.structureDetails {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  height: 3.5rem;
+  border-bottom: 1px solid var(--Gray-200, #eaecf0);
+}
+
+.structureDetails label {
+  color: var(--Gray-900, #101828);
+
+  /* Text s/Regular */
+  font-family: Poppins;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.25rem; /* 142.857% */
+  color: #101828;
+  padding-left: 1rem;
+}
+
+.custom_dropdown {
+  outline: none; /* Remove focus outline */
+  border: none; /* Remove border */
+  cursor: pointer;
+}
+
+.custom_dropdown option {
+  font-size: 14px; /* Adjust font size as needed */
+  background-color: #fff; /* Background color for options */
+  border: none; /* Remove border */
+}
+
+.custom_dropdown option:hover {
+  background-color: #f0f0f0;
+}
