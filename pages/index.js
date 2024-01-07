@@ -1,9 +1,11 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
+import { Provider } from "react-redux";
 
 import "@fontsource/poppins";
 import CreateGroup from "@/components/create-group/CreateGroup";
+import store from "@/store";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +19,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
-        <CreateGroup />
+        <Provider store={store}>
+          <CreateGroup />
+        </Provider>
       </main>
     </>
   );

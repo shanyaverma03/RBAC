@@ -1,19 +1,26 @@
 import Image from "next/image";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 import classes from "./CreateGroup.module.css";
 import featuredIcon from "../../public/images/featured-icon.svg";
 import divider from "../../public/images/divider.svg";
 import Step1 from "../steps/Step1";
-import Step2 from "../steps/Step2";
-import Step4 from "../steps/Step4";
+import Step2 from "../steps/step2/Step2";
+import Step4 from "../steps/step4/Step4";
 import Step3 from "../steps/Step3";
 
 const CreateGroup = () => {
   const [activeStep, setActiveStep] = useState(1);
 
+  const groupName = useSelector((state) => state.groupName.groupName);
+
   const nextStepHandler = () => {
-    setActiveStep((prevStep) => prevStep + 1);
+    if (groupName.trim().length === 0) {
+      console.log("error");
+    } else {
+      setActiveStep((prevStep) => prevStep + 1);
+    }
   };
 
   const prevStepHandler = () => {
