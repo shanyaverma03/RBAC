@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = { structures: [] };
 
 export const structuresSlice = createSlice({
-  name: "Selected structures",
+  name: "Structures",
   initialState,
   reducers: {
     updateAllStructures(state, action) {

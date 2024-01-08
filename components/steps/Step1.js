@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import classes from "./Step1.module.css";

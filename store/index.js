@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import { groupNameSlice } from "./groupNameSlice";
-import { selectedStructuresSlice } from "./selectedStructuresSlice";
+import { structuresSlice } from "./structuresSlice";
 
 const store = configureStore({
   reducer: {
     groupName: groupNameSlice.reducer,
-    selectedStructures: selectedStructuresSlice.reducer,
+    structures: structuresSlice.reducer,
   },
 });
 

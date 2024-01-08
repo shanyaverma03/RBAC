@@ -21,6 +21,7 @@ const Step2 = () => {
 
   const dispatch = useDispatch();
 
+  // toggles all structures
   const checkAllStructuresHandler = () => {
     const modifiedStructures = structures.map((structure) => ({
       ...structure,
@@ -57,10 +58,10 @@ const Step2 = () => {
     if (structures.length === 0) {
       getStructures();
     }
-
     getStructureRoles();
   }, []);
 
+  // check the parent checkbox if all the structures are checked individually
   useEffect(() => {
     setCheckAll(filteredStructures.every((structure) => structure.isSelected));
   }, [filteredStructures]);
