@@ -1,0 +1,36 @@
+{
+  "Phoenix": {
+    "England": ["Topco", "Midco", "Subco"],
+    "Luxembourg": ["Holdco", "Google", "Meta"],
+    "Portugal": ["Por1", "Por2", "Por2"]
+  },
+  "Jupiter": {
+    "England": ["Jupto", "Cosco"],
+    "Luxembourg": ["Lux1", "Lux2"],
+    "Japan": ["Jap1", "Jap2"]
+  },
+  "Saturn": {
+    "Germany": ["Ger1", "Ger2"],
+    "Sweden": ["Swe1", "Swe2"],
+    "Spain": ["Spa1", "Spa2"]
+  },
+  "Pyramid": {
+    "France": ["Fra1", "Fra2"],
+    "Spain": ["Spa1", "Spa2"],
+    "Japan": ["Jap1", "Jap2"]
+  },
+  "Nile": {
+    "Egypt": ["Egy1", "Egy2"],
+    "Sudan": ["Sud1", "Sud2"],
+    "Japan": ["Jap1", "Jap2"]
+  },
+  "Mercury": {
+    "USA": ["USA1", "USA2"],
+    "Canada": ["Can1", "Can2"],
+    "Sweden": ["Swe1", "Swe2"]
+  },
+  "Ocean": {
+    "Australia": ["Aus1", "Aus2"],
+    "Japan": ["Jap1", "Jap2"]
+  }
+}
