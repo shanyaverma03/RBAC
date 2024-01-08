@@ -50,6 +50,16 @@ const Step3 = () => {
     }
   };
 
+  const getAllEntitiesCount = () => {
+    let count = 0;
+    selectedStructures.forEach((structure) => {
+      for (const country in structure.entityCountries) {
+        count += structure.entityCountries[country].length;
+      }
+    });
+    return count;
+  };
+
   useEffect(() => {
     getEntities();
   }, []);
@@ -75,7 +85,9 @@ const Step3 = () => {
             <div className={classes.search}>
               <input type="text" placeholder="Search" />
             </div>
-            <p className={classes.totalEntities}>68 entities</p>
+            <p className={classes.totalEntities}>
+              {getAllEntitiesCount()} entities
+            </p>
           </div>
           <div className={classes.tableContainer}>
             <div className={classes.tableHeader}>
