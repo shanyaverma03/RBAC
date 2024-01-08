@@ -7,9 +7,9 @@ async function handler(req, res) {
       const response = await axios.get(
         `http://localhost:8000/${structureName}`
       );
-      const entities = response.data;
+      const entityCountries = response.data;
       res.status(200).json({
-        entities,
+        entityCountries,
       });
     } catch (error) {
       res.status(500).json({ message: "Getting structures failed." });

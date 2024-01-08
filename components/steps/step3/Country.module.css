@@ -1,0 +1,15 @@
+.entityDetails {
+  display: flex;
+  margin-left: 1rem;
+}
+
+.entityCountry {
+  color: var(--Gray-600, #475467);
+
+  /* Text xs/Medium */
+  font-family: Poppins;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.125rem; /* 150% */
+}

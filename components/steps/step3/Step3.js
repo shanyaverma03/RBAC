@@ -14,26 +14,36 @@ const Step3 = () => {
   const selectedStructures = structures.filter(
     (structure) => structure.isSelected === true
   );
-  console.log(selectedStructures);
+
   const dispatch = useDispatch();
+
+  const getEntity = async (structure) => {
+    const response = await axios.get(`/api/entities/${structure.name}`);
+    const { entityCountries } = response.data;
+    const updatedEntityCountries = {};
+    for (const country in entityCountries) {
+      updatedEntityCountries[country] = entityCountries[country].map(
+        (entity) => ({
+          name: entity,
+          isSelected: false,
+          role: "No access",
+        })
+      );
+    }
+
+    dispatch(
+      structuresSliceActions.updateStructure({
+        ...structure,
+        entityCountries: updatedEntityCountries,
+      })
+    );
+  };
 
   const getEntities = async () => {
     try {
-      selectedStructures.forEach(async (structure) => {
-        const response = await axios.get(`/api/entities/${structure.name}`);
-        const entities = response.data.entities;
-        console.log(response.data.entities);
-        dispatch(
-          structuresSliceActions.updateStructure({
-            ...structure,
-            entities,
-          })
-        );
-        return {
-          ...structure,
-          entities,
-        };
-      });
+      await Promise.allSettled(
+        selectedStructures.map((structure) => getEntity(structure))
+      );
     } catch (err) {
       console.log(err);
     }

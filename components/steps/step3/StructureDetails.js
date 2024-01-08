@@ -1,13 +1,10 @@
 import Image from "next/image";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
 
 import arrowDropDown from "../../../public/images/arrow-drop-down.svg";
 import arrowRight from "../../../public/images/arrow-right.svg";
 import classes from "./StructureDetails.module.css";
-import Entities from "./Entities";
-import { structuresSliceActions } from "@/store/structuresSlice";
+import Country from "./Country";
 
 const StructureDetails = ({ structure }) => {
   const [structureDropdownOpen, setStructureDropdownOpen] = useState(false);
@@ -28,7 +25,10 @@ const StructureDetails = ({ structure }) => {
         </label>
       </div>
 
-      {structureDropdownOpen && <Entities structure={structure} />}
+      {structureDropdownOpen &&
+        Object.keys(structure.entityCountries).map((country) => (
+          <Country key={country} country={country} structure={structure} />
+        ))}
     </>
   );
 };

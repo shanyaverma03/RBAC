@@ -1,0 +1,38 @@
+.entityDetails {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.entityName {
+  display: flex;
+  margin-left: 2rem;
+}
+
+.entityName label {
+  color: var(--Gray-900, #101828);
+
+  /* Text s/Regular */
+  font-family: Poppins;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.25rem; /* 142.857% */
+  margin-left: 0.5rem;
+}
+
+.custom_dropdown {
+  outline: none; /* Remove focus outline */
+  border: none; /* Remove border */
+  cursor: pointer;
+}
+
+.custom_dropdown option {
+  font-size: 14px; /* Adjust font size as needed */
+  background-color: #fff; /* Background color for options */
+  border: none; /* Remove border */
+}
+
+.custom_dropdown option:hover {
+  background-color: #f0f0f0;
+}
