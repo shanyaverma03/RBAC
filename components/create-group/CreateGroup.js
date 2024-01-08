@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 
 import classes from "./CreateGroup.module.css";
 import featuredIcon from "../../public/images/featured-icon.svg";
@@ -9,29 +8,12 @@ import Step1 from "../steps/Step1";
 import Step2 from "../steps/step2/Step2";
 import Step4 from "../steps/step4/Step4";
 import Step3 from "../steps/step3/Step3";
-import ErrorModal from "../Modal/ErrorModal";
 
 const CreateGroup = () => {
   const [activeStep, setActiveStep] = useState(1);
-  const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-
-  const groupName = useSelector((state) => state.groupName.groupName);
-  const structures = useSelector((state) => state.structures.structures);
 
   const nextStepHandler = () => {
-    if (groupName.trim().length === 0 && activeStep === 1) {
-      setError(true);
-      setErrorMessage("Please enter group name");
-    } else if (
-      structures.every((structure) => structure.isSelected === false) &&
-      activeStep === 2
-    ) {
-      setError(true);
-      setErrorMessage("Please select at least one structure");
-    } else {
-      setActiveStep((prevStep) => prevStep + 1);
-    }
+    setActiveStep((prevStep) => prevStep + 1);
   };
 
   const prevStepHandler = () => {
@@ -77,9 +59,6 @@ const CreateGroup = () => {
           )}
         </div>
       </div>
-      {error && (
-        <ErrorModal onClose={() => setError(false)}>{errorMessage}</ErrorModal>
-      )}
     </div>
   );
 };
