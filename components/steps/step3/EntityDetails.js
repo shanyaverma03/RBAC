@@ -15,7 +15,7 @@ const EntityDetails = ({ entity, country, structure }) => {
       const response = await axios.get("/api/entity/roles");
       setEntityRoles(response.data.entityRoles);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
@@ -23,7 +23,13 @@ const EntityDetails = ({ entity, country, structure }) => {
     getEntityRoles();
   }, []);
 
-  const selectEntityHandler = (entityName) => {
+  const updateEntities = (entities) => {
+    const updatedStructure = JSON.parse(JSON.stringify(structure));
+    updatedStructure.entityCountries[country] = entities;
+    dispatch(structuresSliceActions.updateStructure(updatedStructure));
+  };
+
+  const toggleEntityHandler = (entityName) => {
     const updatedEntities = entityCountries[country].map((entity) => {
       if (entity.name === entityName) {
         return { ...entity, isSelected: !entity.isSelected };
@@ -31,9 +37,7 @@ const EntityDetails = ({ entity, country, structure }) => {
       return entity;
     });
 
-    const updatedStructure = JSON.parse(JSON.stringify(structure));
-    updatedStructure.entityCountries[country] = updatedEntities;
-    dispatch(structuresSliceActions.updateStructure(updatedStructure));
+    updateEntities(updatedEntities);
   };
 
   const changeRoleHandler = (entityName, event) => {
@@ -44,10 +48,7 @@ const EntityDetails = ({ entity, country, structure }) => {
       }
       return entity;
     });
-
-    const updatedStructure = JSON.parse(JSON.stringify(structure));
-    updatedStructure.entityCountries[country] = updatedEntities;
-    dispatch(structuresSliceActions.updateStructure(updatedStructure));
+    updateEntities(updatedEntities);
   };
 
   return (
@@ -57,7 +58,7 @@ const EntityDetails = ({ entity, country, structure }) => {
           <input
             type="checkbox"
             checked={entity.isSelected}
-            onChange={() => selectEntityHandler(entity.name)}
+            onChange={() => toggleEntityHandler(entity.name)}
           />
           <label>{entity.name}</label>
         </div>
