@@ -12,13 +12,20 @@ const Entities = ({ structure }) => {
     (state) => state.structures.structures
   );
 
-  const [entityDropdownOpen, setEntityDropdownOpen] = useState(false);
+  const [entityDropdownOpen, setEntityDropdownOpen] = useState({});
 
   const entities = selectedStructures.find(
     (struct) => struct.name === structure.name
   ).entities;
 
   console.log(structure.name, entities);
+
+  const toggleEntityDropdown = (key) => {
+    setEntityDropdownOpen((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
+  };
 
   return (
     <div>
@@ -29,16 +36,16 @@ const Entities = ({ structure }) => {
             <label>
               <Image
                 priority
-                src={entityDropdownOpen ? arrowDropDown : arrowRight}
+                src={entityDropdownOpen[key] ? arrowDropDown : arrowRight}
                 alt="Arrow drop down"
-                onClick={() => setEntityDropdownOpen((open) => !open)}
+                onClick={() => toggleEntityDropdown(key)}
               />
               <p>
                 {key} Entities ({entities[key].length})
               </p>
             </label>
           </div>
-          {entityDropdownOpen && <EntityDetails />}
+          {entityDropdownOpen[key] && <EntityDetails />}
         </div>
       ))}
     </div>
