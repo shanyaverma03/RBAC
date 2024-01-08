@@ -1,0 +1,161 @@
+.content {
+  display: flex;
+  height: auto;
+  padding-top: 1.25rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  align-self: stretch;
+}
+
+.text {
+  display: flex;
+  padding: 0rem 1.5rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  align-self: stretch;
+}
+
+.heading {
+  color: var(--Gray-900, #101828);
+
+  /* Text m/Medium */
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.5rem; /* 150% */
+}
+
+.hintText {
+  color: var(--Gray-600, #475467);
+
+  /* Text s/Regular */
+  font-family: Poppins;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.25rem; /* 142.857% */
+}
+
+.structure {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  align-self: stretch;
+}
+
+.batchApplyRole {
+  display: flex;
+  padding: 0rem 1.5rem;
+  align-items: center;
+  gap: 2rem;
+  align-self: stretch;
+}
+
+.search {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1 0 0;
+  gap: 0.5rem;
+  align-self: stretch;
+  position: relative;
+}
+
+.search input {
+  display: flex;
+  padding: 0.625rem 0.875rem;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: stretch;
+  border-radius: 0.5rem;
+  border: 1px solid var(--Gray-300, #d0d5dd);
+  background: var(--Base-White, #fff);
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  padding-left: 2rem;
+  background: url("/images/search.svg") no-repeat left center;
+  background-size: 20px;
+}
+
+.search input::placeholder {
+  color: var(--Gray-500, #667085);
+
+  /* Text s/Regular */
+  font-family: Poppins;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.25rem; /* 142.857% */
+}
+
+.totalEntities {
+  color: var(--Gray-600, #475467);
+  text-align: right;
+
+  /* Text s/Regular */
+  font-family: Poppins;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.25rem; /* 142.857% */
+}
+
+.tableContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  max-height: 20rem;
+  overflow-y: auto;
+}
+
+.tableHeader {
+  display: flex;
+  height: 2.75rem;
+  padding: 0.75rem 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-self: stretch;
+  border-bottom: 1px solid var(--Gray-200, #eaecf0);
+  background: var(--Gray-50, #f9fafb);
+}
+
+.tableHeader label {
+  color: var(--Gray-600, #475467);
+
+  /* Text xs/Medium */
+  font-family: Poppins;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.125rem; /* 150% */
+  padding-left: 1rem;
+}
+
+.tableHeader p {
+  color: var(--Gray-600, #475467);
+
+  /* Text xs/Medium */
+  font-family: Poppins;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.125rem; /* 150% */
+  padding-left: 1rem;
+}
+
+.tableContent {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  padding: 0.75rem 1.5rem;
+}
+
+.tableContent label {
+  display: flex;
+  align-items: center;
+}

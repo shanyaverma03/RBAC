@@ -19,18 +19,21 @@ const Step3 = () => {
 
   const getEntities = async () => {
     try {
-      const promises = selectedStructures.map(async (structure) => {
+      selectedStructures.forEach(async (structure) => {
         const response = await axios.get(`/api/entities/${structure.name}`);
         const entities = response.data.entities;
         console.log(response.data.entities);
+        dispatch(
+          structuresSliceActions.updateStructure({
+            ...structure,
+            entities,
+          })
+        );
         return {
           ...structure,
           entities,
         };
       });
-      const modifiedStructures = await Promise.all(promises);
-      console.log(modifiedStructures);
-      dispatch(structuresSliceActions.updateAllStructures(modifiedStructures));
     } catch (err) {
       console.log(err);
     }
