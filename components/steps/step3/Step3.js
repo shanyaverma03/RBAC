@@ -39,6 +39,7 @@ const Step3 = () => {
     );
   };
 
+  // Get all the entities of a structure by making individual api calls
   const getEntities = async () => {
     try {
       await Promise.allSettled(
@@ -88,8 +89,9 @@ const Step3 = () => {
               {selectedStructures.map((structure, index) => (
                 <div key={index}>
                   <StructureDetails structure={structure} />
-
-                  <Image priority src={divider} alt="Divider" />
+                  {index < selectedStructures.length - 1 && (
+                    <Image priority src={divider} alt="Divider" />
+                  )}
                 </div>
               ))}
             </div>
