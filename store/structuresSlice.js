@@ -10,7 +10,6 @@ export const structuresSlice = createSlice({
       state.structures = action.payload;
     },
     updateStructure(state, action) {
-      console.log("updating structure");
       state.structures = state.structures.map((structure) => {
         if (structure.name === action.payload.name) {
           return action.payload;

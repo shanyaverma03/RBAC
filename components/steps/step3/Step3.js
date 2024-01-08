@@ -18,25 +18,29 @@ const Step3 = () => {
   const dispatch = useDispatch();
 
   const getEntity = async (structure) => {
-    const response = await axios.get(`/api/entities/${structure.name}`);
-    const { entityCountries } = response.data;
-    const updatedEntityCountries = {};
-    for (const country in entityCountries) {
-      updatedEntityCountries[country] = entityCountries[country].map(
-        (entity) => ({
-          name: entity,
-          isSelected: false,
-          role: "No access",
+    try {
+      const response = await axios.get(`/api/entities/${structure.name}`);
+      const { entityCountries } = response.data;
+      const updatedEntityCountries = {};
+      for (const country in entityCountries) {
+        updatedEntityCountries[country] = entityCountries[country].map(
+          (entity) => ({
+            name: entity,
+            isSelected: false,
+            role: "No access",
+          })
+        );
+      }
+
+      dispatch(
+        structuresSliceActions.updateStructure({
+          ...structure,
+          entityCountries: updatedEntityCountries,
         })
       );
+    } catch (err) {
+      console.error(err);
     }
-
-    dispatch(
-      structuresSliceActions.updateStructure({
-        ...structure,
-        entityCountries: updatedEntityCountries,
-      })
-    );
   };
 
   // Get all the entities of a structure by making individual api calls
@@ -46,7 +50,7 @@ const Step3 = () => {
         selectedStructures.map((structure) => getEntity(structure))
       );
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 

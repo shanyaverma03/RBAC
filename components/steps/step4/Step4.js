@@ -16,7 +16,7 @@ const Step4 = () => {
       const usersRes = await axios.get("/api/users");
       setUsers(usersRes.data.users);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

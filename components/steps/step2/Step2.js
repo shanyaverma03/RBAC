@@ -41,7 +41,7 @@ const Step2 = () => {
 
       dispatch(structuresSliceActions.updateAllStructures(modifiedStructures));
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -50,7 +50,7 @@ const Step2 = () => {
       const response = await axios.get("/api/structure/roles");
       setRoles(response.data.structureRoles);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
