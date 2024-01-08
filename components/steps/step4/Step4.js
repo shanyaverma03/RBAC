@@ -1,20 +1,29 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
 
 import classes from "./Step4.module.css";
 import permissionsGroupsStep4 from "../../../public/images/permissionsGroupsStep4.svg";
 import UserDetails from "./UserDetails";
+import { usersSliceActions } from "@/store/usersSlice";
 
 const Step4 = () => {
-  const [users, setUsers] = useState([]);
+  const users = useSelector((state) => state.users.users);
   const [searchUser, setSearchUser] = useState("");
-  const [members, setMembers] = useState(0);
+  const dispatch = useDispatch();
 
   const getUsers = async () => {
     try {
-      const usersRes = await axios.get("/api/users");
-      setUsers(usersRes.data.users);
+      const response = await axios.get("/api/users");
+      const modifiedUsers = response.data.users.map((user) => ({
+        user: user.user,
+        email: user.email,
+        organisation: user.organisation,
+        isSelected: false,
+      }));
+
+      dispatch(usersSliceActions.updateAllUsers(modifiedUsers));
     } catch (error) {
       console.error(error);
     }
@@ -29,16 +38,8 @@ const Step4 = () => {
   };
 
   const filteredUsers = users.filter((user) =>
-    user.user[0].toLowerCase().includes(searchUser.toLowerCase())
+    user.user.toLowerCase().includes(searchUser.toLowerCase())
   );
-
-  const decreaseMembers = () => {
-    setMembers((members) => members - 1);
-  };
-
-  const increaseMembers = () => {
-    setMembers((members) => members + 1);
-  };
 
   return (
     <div>
@@ -66,18 +67,13 @@ const Step4 = () => {
                 value={searchUser}
               />
             </div>
-            <p className={classes.totalMembers}>{members} members</p>
+            <p className={classes.totalMembers}>
+              {filteredUsers.length} members
+            </p>
           </div>
 
           {filteredUsers.map((user, index) => (
-            <UserDetails
-              key={index}
-              user={user.user}
-              email={user.email}
-              organisation={user.organisation}
-              decreaseMembers={decreaseMembers}
-              increaseMembers={increaseMembers}
-            />
+            <UserDetails key={index} user={user} />
           ))}
         </div>
       </div>
