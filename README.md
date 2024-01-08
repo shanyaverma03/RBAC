@@ -1,7 +1,7 @@
 ## Steps to run the app in dev environment
 
 - Ensure node.js is installed on your system
-- Next, install the depenedencies
+- Install the depenedencies
 
 ```bash
   npm install
