@@ -1,0 +1,12 @@
+.structureRole {
+  display: flex;
+  padding: 0.125rem 0.5rem;
+  align-items: center;
+  border-radius: 1rem;
+  background: var(--Primary-25, #edf6fd);
+  mix-blend-mode: multiply;
+}
+
+.structureDetails {
+  display: flex;
+}
