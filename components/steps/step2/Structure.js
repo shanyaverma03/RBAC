@@ -7,7 +7,7 @@ import { structuresSliceActions } from "@/store/structuresSlice";
 const Structure = ({ structure, roles }) => {
   const dispatch = useDispatch();
 
-  const structureChangeHandler = () => {
+  const toggleStructureHandler = () => {
     dispatch(
       structuresSliceActions.updateStructure({
         ...structure,
@@ -31,7 +31,7 @@ const Structure = ({ structure, roles }) => {
       <div>
         <input
           type="checkbox"
-          onChange={structureChangeHandler}
+          onChange={toggleStructureHandler}
           checked={structure.isSelected}
         />
         <label>{structure.name}</label>

@@ -13,7 +13,7 @@ const UserDetails = ({
 }) => {
   const [isChecked, setIsChecked] = useState(false);
 
-  const selectUserHandler = () => {
+  const toggleUserHandler = () => {
     //removing the user
     if (isChecked) {
       decreaseMembers();
@@ -43,7 +43,7 @@ const UserDetails = ({
           <input
             type="checkbox"
             checked={isChecked}
-            onChange={selectUserHandler}
+            onChange={toggleUserHandler}
           />
           <span className={classes.slider}></span>
         </label>

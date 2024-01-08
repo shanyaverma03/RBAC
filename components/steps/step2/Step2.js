@@ -22,7 +22,7 @@ const Step2 = () => {
   const dispatch = useDispatch();
 
   // toggles all structures
-  const checkAllStructuresHandler = () => {
+  const toggleAllStructuresHandler = () => {
     const modifiedStructures = structures.map((structure) => ({
       ...structure,
       isSelected: !checkAll,
@@ -106,7 +106,7 @@ const Step2 = () => {
               <div>
                 <input
                   type="checkbox"
-                  onChange={checkAllStructuresHandler}
+                  onChange={toggleAllStructuresHandler}
                   checked={checkAll}
                 />
                 <label>Structure</label>
