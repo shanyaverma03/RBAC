@@ -14,7 +14,10 @@ const Step2 = () => {
   const [roles, setRoles] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [checkAll, setCheckAll] = useState(false);
-  const [filteredStructures, setFilteredStructures] = useState([]);
+
+  const filteredStructures = structures.filter((structure) =>
+    structure.name.toLowerCase().includes(searchInput.toLowerCase())
+  );
 
   const dispatch = useDispatch();
 
@@ -36,7 +39,6 @@ const Step2 = () => {
       }));
 
       dispatch(structuresSliceActions.updateAllStructures(modifiedStructures));
-      setFilteredStructures(modifiedStructures);
     } catch (error) {
       console.log(error);
     }
@@ -52,7 +54,10 @@ const Step2 = () => {
   };
 
   useEffect(() => {
-    getStructures();
+    if (structures.length === 0) {
+      getStructures();
+    }
+
     getStructureRoles();
   }, []);
 
@@ -60,18 +65,9 @@ const Step2 = () => {
     setCheckAll(filteredStructures.every((structure) => structure.isSelected));
   }, [filteredStructures]);
 
-  useEffect(() => {
-    setFilteredStructures(structures);
-  }, [structures]);
-
   const searchStructureHandler = (event) => {
     const input = event.target.value;
     setSearchInput(input);
-    setFilteredStructures(
-      structures.filter((structure) =>
-        structure.name.toLowerCase().includes(input.toLowerCase())
-      )
-    );
   };
 
   return (

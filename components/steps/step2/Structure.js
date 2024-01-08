@@ -37,7 +37,7 @@ const Structure = ({ structure, roles }) => {
         <label>{structure.name}</label>
       </div>
       <select
-        value={structure.role}
+        value={structure.selectedRole}
         className={classes.custom_dropdown}
         onChange={selectRoleHandler}
       >
