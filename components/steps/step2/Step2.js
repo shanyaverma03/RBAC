@@ -7,50 +7,36 @@ import { useDispatch, useSelector } from "react-redux";
 import classes from "./Step2.module.css";
 import permissionsGroupsStep2 from "../../../public/images/permissionsGroupsStep2.svg";
 import Structure from "./Structure";
-import { selectedStructuresSliceActions } from "@/store/selectedStructuresSlice";
+import { structuresSliceActions } from "@/store/structuresSlice";
 
 const Step2 = () => {
-  const [structures, setStructures] = useState([]);
+  const structures = useSelector((state) => state.structures.structures);
   const [roles, setRoles] = useState([]);
-  const [allStructuresCheck, setAllStructuresCheck] = useState(false);
   const [searchInput, setSearchInput] = useState("");
+  const [checkAll, setCheckAll] = useState(false);
+  const [filteredStructures, setFilteredStructures] = useState([]);
 
   const dispatch = useDispatch();
 
-  const selectedStructures = useSelector(
-    (state) => state.selectedStructures.structures
-  );
-
   const checkAllStructuresHandler = () => {
-    //if it was already checked, the user wants to remove all structures
-    if (allStructuresCheck) {
-      structures.map((structure) => {
-        dispatch(
-          selectedStructuresSliceActions.removeStructure({
-            structureName: structure,
-          })
-        );
-      });
-    }
-    //if it was unchecked, dispatch action to add all the structures with the role being the default role (No access)
-    else {
-      structures.map((structure) => {
-        dispatch(
-          selectedStructuresSliceActions.addStructure({
-            structureName: structure,
-            selectedRole: "No access",
-          })
-        );
-      });
-    }
-
-    setAllStructuresCheck((checkAll) => !checkAll);
+    const modifiedStructures = structures.map((structure) => ({
+      ...structure,
+      isSelected: !checkAll,
+    }));
+    dispatch(structuresSliceActions.updateAllStructures(modifiedStructures));
   };
 
   const getStructures = async () => {
     try {
-      const structuresRes = await axios.get("/api/structures");
-      setStructures(structuresRes.data.structures);
+      const response = await axios.get("/api/structures");
+      const modifiedStructures = response.data.structures.map((structure) => ({
+        name: structure,
+        selectedRole: "No access",
+        isSelected: false,
+      }));
+
+      dispatch(structuresSliceActions.updateAllStructures(modifiedStructures));
+      setFilteredStructures(modifiedStructures);
     } catch (error) {
       console.log(error);
     }
@@ -58,8 +44,8 @@ const Step2 = () => {
 
   const getStructureRoles = async () => {
     try {
-      const rolesRes = await axios.get("/api/structure/roles");
-      setRoles(rolesRes.data.structureRoles);
+      const response = await axios.get("/api/structure/roles");
+      setRoles(response.data.structureRoles);
     } catch (error) {
       console.log(error);
     }
@@ -70,13 +56,24 @@ const Step2 = () => {
     getStructureRoles();
   }, []);
 
+  useEffect(() => {
+    setCheckAll(filteredStructures.every((structure) => structure.isSelected));
+  }, [filteredStructures]);
+
+  useEffect(() => {
+    setFilteredStructures(structures);
+  }, [structures]);
+
   const searchStructureHandler = (event) => {
-    setSearchInput(event.target.value);
+    const input = event.target.value;
+    setSearchInput(input);
+    setFilteredStructures(
+      structures.filter((structure) =>
+        structure.name.toLowerCase().includes(input.toLowerCase())
+      )
+    );
   };
 
-  const filteredStructures = structures.filter((structure) =>
-    structure[0].toLowerCase().includes(searchInput.toLowerCase())
-  );
   return (
     <div>
       <Image
@@ -104,34 +101,24 @@ const Step2 = () => {
               />
             </div>
             <p className={classes.totalStructures}>
-              {filteredStructures.length > 0
-                ? filteredStructures.length
-                : structures.length}{" "}
-              structures
+              {filteredStructures.length} structures
             </p>
           </div>
           <div className={classes.tableContainer}>
             <div className={classes.tableHeader}>
               <div>
-                <input type="checkbox" onChange={checkAllStructuresHandler} />
+                <input
+                  type="checkbox"
+                  onChange={checkAllStructuresHandler}
+                  checked={checkAll}
+                />
                 <label>Structure</label>
               </div>
               <p>Role</p>
             </div>
             <div className={classes.tableContent}>
               {filteredStructures.map((structure, index) => (
-                <Structure
-                  key={index}
-                  structureName={structure}
-                  structureRoles={roles}
-                  isChecked={selectedStructures.some(
-                    (struc) => struc.name === structure
-                  )}
-                  role={
-                    selectedStructures.find((struc) => struc.name === structure)
-                      ?.role ?? "No access"
-                  }
-                />
+                <Structure key={index} structure={structure} roles={roles} />
               ))}
             </div>
           </div>

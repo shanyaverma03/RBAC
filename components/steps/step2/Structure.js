@@ -2,39 +2,25 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import classes from "./Structure.module.css";
-import { selectedStructuresSliceActions } from "@/store/selectedStructuresSlice";
+import { structuresSliceActions } from "@/store/structuresSlice";
 
-const Structure = ({ structureName, structureRoles, isChecked, role }) => {
-  const [selectedRole, setSelectedRole] = useState(role);
-
+const Structure = ({ structure, roles }) => {
   const dispatch = useDispatch();
 
   const structureChangeHandler = () => {
-    //if it was already checked, the user wants to remove the structure
-    if (isChecked) {
-      dispatch(
-        selectedStructuresSliceActions.removeStructure({ structureName })
-      );
-    }
-    //if not checked, user wants to add the structure
-    else {
-      dispatch(
-        selectedStructuresSliceActions.addStructure({
-          structureName,
-          selectedRole,
-        })
-      );
-    }
+    dispatch(
+      structuresSliceActions.updateStructure({
+        ...structure,
+        isSelected: !structure.isSelected,
+      })
+    );
   };
 
   const selectRoleHandler = (event) => {
     const role = event.target.value;
-    setSelectedRole(role);
-
-    //if it was already checked, the user wants to change the role of the added structure
     dispatch(
-      selectedStructuresSliceActions.editStructureRole({
-        structureName,
+      structuresSliceActions.updateStructure({
+        ...structure,
         selectedRole: role,
       })
     );
@@ -46,17 +32,17 @@ const Structure = ({ structureName, structureRoles, isChecked, role }) => {
         <input
           type="checkbox"
           onChange={structureChangeHandler}
-          checked={isChecked}
+          checked={structure.isSelected}
         />
-        <label>{structureName}</label>
+        <label>{structure.name}</label>
       </div>
       <select
-        value={selectedRole}
+        value={structure.role}
         className={classes.custom_dropdown}
         onChange={selectRoleHandler}
       >
-        {structureRoles &&
-          structureRoles.map((role, index) => (
+        {roles &&
+          roles.map((role, index) => (
             <option key={index} value={role}>
               {role}
             </option>
