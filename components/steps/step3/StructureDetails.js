@@ -9,8 +9,8 @@ import Country from "./Country";
 import { structuresSliceActions } from "@/store/structuresSlice";
 import Divider from "@/components/Divider";
 
-const StructureDetails = ({ structure, expandAll }) => {
-  const [structureDropdownOpen, setStructureDropdownOpen] = useState(expandAll);
+const StructureDetails = ({ structure, expandAll, setExpandAll }) => {
+  const [structureDropdownOpen, setStructureDropdownOpen] = useState(false);
   const [checkAll, setCheckAll] = useState(false);
   const dispatch = useDispatch();
   const { entityCountries } = structure;
@@ -42,6 +42,11 @@ const StructureDetails = ({ structure, expandAll }) => {
     dispatch(structuresSliceActions.updateStructure(updatedStructure));
   };
 
+  const structureDropDownHandler = () => {
+    setStructureDropdownOpen((open) => !open);
+    setExpandAll(null);
+  };
+
   return (
     <>
       <Divider />
@@ -56,7 +61,7 @@ const StructureDetails = ({ structure, expandAll }) => {
             priority
             src={structureDropdownOpen ? arrowDropDown : arrowRight}
             alt="Arrow drop down"
-            onClick={() => setStructureDropdownOpen((open) => !open)}
+            onClick={structureDropDownHandler}
           />
           <p>{structure.name}</p>
           <div className={classes.structureRole}>{structure.selectedRole}</div>
@@ -70,6 +75,7 @@ const StructureDetails = ({ structure, expandAll }) => {
             country={country}
             structure={structure}
             expandAll={expandAll}
+            setExpandAll={setExpandAll}
           />
         ))}
     </>

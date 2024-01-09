@@ -15,7 +15,7 @@ const Step3 = () => {
     (structure) => structure.isSelected === true
   );
   const [checkAll, setCheckAll] = useState(false);
-  const [expandAll, setExpandAll] = useState(false);
+  const [expandAll, setExpandAll] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -160,6 +160,7 @@ const Step3 = () => {
                   key={index}
                   structure={structure}
                   expandAll={expandAll}
+                  setExpandAll={setExpandAll}
                 />
               ))}
             </div>
