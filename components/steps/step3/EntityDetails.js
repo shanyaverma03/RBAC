@@ -52,29 +52,27 @@ const EntityDetails = ({ entity, country, structure }) => {
   };
 
   return (
-    <div>
-      <div key={entity.name} className={classes.entityDetails}>
-        <div className={classes.entityName}>
-          <input
-            type="checkbox"
-            checked={entity.isSelected}
-            onChange={() => toggleEntityHandler(entity.name)}
-          />
-          <label>{entity.name}</label>
-        </div>
-        <select
-          className={classes.custom_dropdown}
-          value={entity.entityRole}
-          onChange={() => changeRoleHandler(entity.name, event)}
-        >
-          {entityRoles &&
-            entityRoles.map((role, index) => (
-              <option key={index} value={role}>
-                {role}
-              </option>
-            ))}
-        </select>
+    <div key={entity.name} className={classes.entityDetails}>
+      <div className={classes.entityName}>
+        <input
+          type="checkbox"
+          checked={entity.isSelected}
+          onChange={() => toggleEntityHandler(entity.name)}
+        />
+        <label>{entity.name}</label>
       </div>
+      <select
+        className={classes.custom_dropdown}
+        value={entity.entityRole}
+        onChange={() => changeRoleHandler(entity.name, event)}
+      >
+        {entityRoles &&
+          entityRoles.map((role, index) => (
+            <option key={index} value={role}>
+              {role}
+            </option>
+          ))}
+      </select>
     </div>
   );
 };

@@ -5,15 +5,17 @@ import axios from "axios";
 
 import classes from "./Step3.module.css";
 import permissionsGroupsStep3 from "../../../public/images/permissionsGroupsStep3.svg";
-import divider from "../../../public/images/divider.svg";
 import StructureDetails from "./StructureDetails";
 import { structuresSliceActions } from "@/store/structuresSlice";
+import Divider from "@/components/Divider";
 
 const Step3 = () => {
   const structures = useSelector((state) => state.structures.structures);
   const selectedStructures = structures.filter(
     (structure) => structure.isSelected === true
   );
+  const [checkAll, setCheckAll] = useState(false);
+  const [expandAll, setExpandAll] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -68,6 +70,33 @@ const Step3 = () => {
     getEntities();
   }, []);
 
+  // Check the entity checkbox if all the entities of all the countries of all the structures are checked
+  useEffect(() => {
+    setCheckAll(
+      selectedStructures.every((structure) =>
+        Object.keys(structure.entityCountries).every((country) =>
+          structure.entityCountries[country].every(
+            (entity) => entity.isSelected
+          )
+        )
+      )
+    );
+  }, [selectedStructures]);
+
+  // Toggle all the entities of all the countries of all the structures when the entity checkbox is checked
+  const toggleAllEntitiesHandler = () => {
+    for (const structure of selectedStructures) {
+      const updatedStructure = JSON.parse(JSON.stringify(structure));
+      for (const country in structure.entityCountries) {
+        const newEntities = updatedStructure.entityCountries[country].map(
+          (entity) => ({ ...entity, isSelected: !checkAll })
+        );
+        updatedStructure.entityCountries[country] = newEntities;
+      }
+      dispatch(structuresSliceActions.updateStructure(updatedStructure));
+    }
+  };
+
   return (
     <div>
       <Image
@@ -89,26 +118,49 @@ const Step3 = () => {
             <div className={classes.search}>
               <input type="text" placeholder="Search" />
             </div>
+
             <p className={classes.totalEntities}>
               {getAllEntitiesCount()} entities
             </p>
           </div>
           <div className={classes.tableContainer}>
+            <Divider />
             <div className={classes.tableHeader}>
-              <div>
-                <input type="checkbox" />
-                <label>Entity</label>
+              <div className={classes.entityActions}>
+                <div>
+                  <input
+                    type="checkbox"
+                    onChange={toggleAllEntitiesHandler}
+                    checked={checkAll}
+                  />
+                  <label>Entity</label>
+                </div>
+                <div className={classes.expandActions}>
+                  <p
+                    className={classes.expandAction}
+                    onClick={() => setExpandAll(true)}
+                  >
+                    Expand all
+                  </p>
+                  <p>|</p>
+                  <p
+                    className={classes.expandAction}
+                    onClick={() => setExpandAll(false)}
+                  >
+                    Collapse all
+                  </p>
+                </div>
               </div>
+
               <p>Role</p>
             </div>
             <div className={classes.tableContent}>
               {selectedStructures.map((structure, index) => (
-                <div key={index}>
-                  <StructureDetails structure={structure} />
-                  {index < selectedStructures.length - 1 && (
-                    <Image priority src={divider} alt="Divider" />
-                  )}
-                </div>
+                <StructureDetails
+                  key={index}
+                  structure={structure}
+                  expandAll={expandAll}
+                />
               ))}
             </div>
           </div>

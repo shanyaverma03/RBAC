@@ -1,18 +1,56 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 import arrowDropDown from "../../../public/images/arrow-drop-down.svg";
 import arrowRight from "../../../public/images/arrow-right.svg";
 import classes from "./StructureDetails.module.css";
 import Country from "./Country";
+import { structuresSliceActions } from "@/store/structuresSlice";
+import Divider from "@/components/Divider";
 
-const StructureDetails = ({ structure }) => {
-  const [structureDropdownOpen, setStructureDropdownOpen] = useState(false);
+const StructureDetails = ({ structure, expandAll }) => {
+  const [structureDropdownOpen, setStructureDropdownOpen] = useState(expandAll);
+  const [checkAll, setCheckAll] = useState(false);
+  const dispatch = useDispatch();
+  const { entityCountries } = structure;
+
+  // Check the structure checkbox if all the entities of all the countries are checked
+  useEffect(() => {
+    setCheckAll(
+      Object.keys(entityCountries).every((country) =>
+        entityCountries[country].every((entity) => entity.isSelected)
+      )
+    );
+  }, [entityCountries]);
+
+  // Expand/collapse the structure dropdown when the top level "expand" / "collapse" is clicked
+  useEffect(() => {
+    setStructureDropdownOpen(expandAll);
+  }, [expandAll]);
+
+  // Toggle all the entities of all the countries in this structure when structure checkbox is checked
+  const toggleAllEntitiesHandler = () => {
+    const updatedStructure = JSON.parse(JSON.stringify(structure));
+    for (const country in entityCountries) {
+      const newEntities = updatedStructure.entityCountries[country].map(
+        (entity) => ({ ...entity, isSelected: !checkAll })
+      );
+      updatedStructure.entityCountries[country] = newEntities;
+    }
+
+    dispatch(structuresSliceActions.updateStructure(updatedStructure));
+  };
 
   return (
     <>
+      <Divider />
       <div className={classes.structureDetails}>
-        <input type="checkbox"></input>
+        <input
+          type="checkbox"
+          onChange={toggleAllEntitiesHandler}
+          checked={checkAll}
+        ></input>
         <label>
           <Image
             priority
@@ -27,7 +65,12 @@ const StructureDetails = ({ structure }) => {
 
       {structureDropdownOpen &&
         Object.keys(structure.entityCountries).map((country) => (
-          <Country key={country} country={country} structure={structure} />
+          <Country
+            key={country}
+            country={country}
+            structure={structure}
+            expandAll={expandAll}
+          />
         ))}
     </>
   );

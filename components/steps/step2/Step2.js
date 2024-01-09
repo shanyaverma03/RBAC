@@ -37,6 +37,7 @@ const Step2 = () => {
         name: structure,
         selectedRole: "No access",
         isSelected: false,
+        entityCountries: {},
       }));
 
       dispatch(structuresSliceActions.updateAllStructures(modifiedStructures));

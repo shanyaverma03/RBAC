@@ -1,35 +1,62 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
+import { useDispatch } from "react-redux";
 
 import arrowDropDown from "../../../public/images/arrow-drop-down.svg";
 import arrowRight from "../../../public/images/arrow-right.svg";
 import classes from "./Country.module.css";
 import EntityDetails from "./EntityDetails";
+import { structuresSliceActions } from "@/store/structuresSlice";
+import Divider from "@/components/Divider";
 
-const Country = ({ country, structure }) => {
-  const [entityDropdownOpen, setEntityDropdownOpen] = useState(false);
+const Country = ({ country, structure, expandAll }) => {
+  const [countryDropdownOpen, setCountryDropdownOpen] = useState(expandAll);
   const { entityCountries } = structure;
+  const [checkAll, setCheckAll] = useState(false);
+  const dispatch = useDispatch();
+
+  // Check the country checkbox if all the entities of this country are checked
+  useEffect(() => {
+    setCheckAll(entityCountries[country].every((entity) => entity.isSelected));
+  }, [entityCountries, country]);
+
+  // Expand/collapse the country dropdown when the top level "expand" / "collapse" is clicked
+  useEffect(() => {
+    setCountryDropdownOpen(expandAll);
+  }, [expandAll]);
+
+  // Toggle all the entities of this country when country checkbox is checked
+  const toggleAllEntitiesHandler = () => {
+    const updatedStructure = JSON.parse(JSON.stringify(structure));
+    const newEntities = updatedStructure.entityCountries[country].map(
+      (entity) => ({ ...entity, isSelected: !checkAll })
+    );
+    updatedStructure.entityCountries[country] = newEntities;
+    dispatch(structuresSliceActions.updateStructure(updatedStructure));
+  };
+
   return (
-    <div>
+    <>
+      <Divider />
       <div className={classes.entityDetails}>
-        <input type="checkbox"></input>
+        <input
+          type="checkbox"
+          onChange={toggleAllEntitiesHandler}
+          checked={checkAll}
+        />
         <label>
           <Image
             priority
-            src={
-              entityDropdownOpen[Object.keys(entityCountries)]
-                ? arrowDropDown
-                : arrowRight
-            }
+            src={countryDropdownOpen ? arrowDropDown : arrowRight}
             alt="Arrow drop down"
-            onClick={() => setEntityDropdownOpen((prev) => !prev)}
+            onClick={() => setCountryDropdownOpen((prev) => !prev)}
           />
           <p className={classes.entityCountry}>
             {country} Entities ({entityCountries[country].length})
           </p>
         </label>
       </div>
-      {entityDropdownOpen &&
+      {countryDropdownOpen &&
         entityCountries[country].map((entity, index) => (
           <EntityDetails
             key={index}
@@ -38,7 +65,7 @@ const Country = ({ country, structure }) => {
             structure={structure}
           />
         ))}
-    </div>
+    </>
   );
 };
 

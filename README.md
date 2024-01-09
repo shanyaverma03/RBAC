@@ -13,6 +13,12 @@
   npm run dev
 ```
 
+- Now, open a new terminal and start the json server
+
+```bash
+  json-server data/entities.json --port 8000
+```
+
 ## Authors
 
 - [Shanya Verma](https://github.com/shanyaverma03)

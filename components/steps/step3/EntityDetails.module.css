@@ -2,11 +2,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0.75rem 1.5rem 0.75rem 4rem;
 }
 
 .entityName {
   display: flex;
-  margin-left: 2rem;
 }
 
 .entityName label {
@@ -14,7 +14,7 @@
 
   /* Text s/Regular */
   font-family: Poppins;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   font-style: normal;
   font-weight: 400;
   line-height: 1.25rem; /* 142.857% */
